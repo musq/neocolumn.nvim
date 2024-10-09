@@ -17,6 +17,7 @@ M.defaults = {
     diagnostics = true,
     min_diagnostic_severity = vim.diagnostic.severity.HINT,
     max_line_length = 100,
+    max_line_length_by_filetypes = {},
     character = "│",
     max_distance = 0
 }
