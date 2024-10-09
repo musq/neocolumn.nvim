@@ -82,6 +82,10 @@ function M.setup(opts)
                 DrawNormal[event.buf] = true
             end
 
+            local current_buffer_max_line_length = (
+                config.opts.max_line_length_by_filetypes[filetype] or config.opts.max_line_length
+            )
+
             if config.opts.max_distance ~= 0 then
                 local cursor_line = vim.api.nvim_win_get_cursor(0)[1]
                 DrawNormal[event.buf] = vim.api.nvim_buf_get_lines(
@@ -89,7 +93,7 @@ function M.setup(opts)
                     cursor_line - 1,
                     cursor_line,
                     false
-                )[1]:len() >= config.opts.max_line_length - config.opts.max_distance
+                )[1]:len() >= current_buffer_max_line_length - config.opts.max_distance
             else
                 DrawNormal[event.buf] = true
             end
@@ -123,7 +127,7 @@ function M.setup(opts)
                         i - 1,
                         i,
                         false
-                    )[1]:len() > config.opts.max_line_length then
+                    )[1]:len() > current_buffer_max_line_length then
                         if Ids[event.buf] then
                             if Ids[event.buf][i] then
                                 vim.api.nvim_buf_del_extmark(0, ns, Ids[event.buf][i])
@@ -229,14 +233,14 @@ function M.setup(opts)
                         id = Ids[event.buf][i],
                         virt_text = { { char, hl } },
                         virt_text_pos = "overlay",
-                        virt_text_win_col = config.opts.max_line_length,
+                        virt_text_win_col = current_buffer_max_line_length,
                         hl_mode = "combine"
                     })
                 else
                     Ids[event.buf][i] = vim.api.nvim_buf_set_extmark(0, ns, i - 1, 0, {
                         virt_text = { { char, hl } },
                         virt_text_pos = "overlay",
-                        virt_text_win_col = config.opts.max_line_length,
+                        virt_text_win_col = current_buffer_max_line_length,
                         hl_mode = "combine"
                     })
                 end
