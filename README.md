@@ -82,8 +82,11 @@ Here are the available options and their default values:
     diagnostics = true,
     -- If `diagnostics` is `true` then diagnostic with a severity lower than this will be ignored
     min_diagnostic_severity = vim.diagnostic.severity.HINT,
-    -- The maximum allowed length for a line. The neocolumn will be placed one column to the right
+    -- The default maximum allowed length for a line. The neocolumn will be placed one column to the right
     max_line_length = 100,
+    -- The maximum allowed length for a line by filetype. The neocolumn will be placed one column to the right
+    -- e.g. { python = 88, text = 72 }
+    max_line_length_by_filetypes = {},
     -- The character use as the neocolumn
     character = "│",
     -- The neocolumn will be shown only if the length of the current line is this close to it
